@@ -38,7 +38,7 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'database' => env('DB_DATABASE', database_path('sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
@@ -100,7 +100,7 @@ return [
     |
     | This table keeps track of all the migrations that have already run for
     | your application. Using this information, we can determine which of
-    | the migrations on disk haven't actually been run in the database.
+    | the migrations on disk haven't actually been run in the 
     |
     */
 

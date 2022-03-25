@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use App\Models\Pet;
 
 class PetController extends Controller
 {
@@ -14,7 +16,9 @@ class PetController extends Controller
     public function index()
     {
         //
-        return view('pets.index');
+        $data['pets']=Pet::paginate(5);
+        return view('pets.index', $data);
+
     }
 
     /**
@@ -37,6 +41,10 @@ class PetController extends Controller
     public function store(Request $request)
     {
         //
+        $petData= request()->except('_token');
+        Pet::insert($petData);
+        //return response()->json($petData);
+        return redirect('pet');
     }
 
     /**
@@ -59,6 +67,9 @@ class PetController extends Controller
     public function edit($id)
     {
         //
+        $pet=Pet::findOrFail($id);
+        return view ('pets.edit', compact('pet'));
+
     }
 
     /**
@@ -71,6 +82,10 @@ class PetController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $petData=request()->except(['_token', '_method']);
+        Pet::where('id', '=', $id)->update($petData);
+        return redirect('pet');
+
     }
 
     /**
@@ -82,5 +97,7 @@ class PetController extends Controller
     public function destroy($id)
     {
         //
+        Pet::destroy($id);
+        return redirect("pet");
     }
 }
